@@ -15,7 +15,7 @@ services:
       - '--web.enable-lifecycle'
     restart: unless-stopped
     depends_on:
-      - nodeexporter
+      - nodeexporter 
     expose:
       - 9090
     networks:
@@ -29,11 +29,14 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
     command:
+      - '--collector.loadavg'
       - '--path.procfs=/host/proc'
       - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     restart: unless-stopped
+    ports:
+      - 9100:9100
     expose:
       - 9100
     networks:
